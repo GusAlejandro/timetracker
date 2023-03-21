@@ -14,11 +14,38 @@ function LoginForm() {
         setCredentials(credentials => ({...credentials, [name]: value}));
     }
 
-    const handleSubmit = (event: React.SyntheticEvent) => {
-        // most likely handleSubmit function will be passed as a prop from top level 
-        event.preventDefault();
-        console.log(credentials);
+
+    async function handleRegister(event: React.SyntheticEvent, username: string, password: string) {
+      event.preventDefault();
+      console.log(credentials);
+
+      const response = await fetch('http://127.0.0.1:5000/register', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({username, password})
+      }).then((t) => t.json())
+
+      console.log(response);
     }
+    
+
+    async function handleLogin(event: React.SyntheticEvent, username: string, password: string) {
+      event.preventDefault();
+      console.log(credentials);
+
+      const response = await fetch('http://127.0.0.1:5000/login', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({username, password})
+      }).then((t) => t.json())
+
+      console.log(response);
+    }
+
 
     return (
       <>
@@ -67,7 +94,7 @@ function LoginForm() {
                 <div>
                   <button
                   type="submit"
-                    onClick={handleSubmit}
+                    onClick={ (e) => { handleLogin(e, credentials.username, credentials.password) }}
                     className="flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Login
@@ -76,7 +103,7 @@ function LoginForm() {
 
                 <div>
                   <button
-                  onClick={handleSubmit}
+                  onClick={ (e) => { handleRegister(e, credentials.username, credentials.password)}}
                     type="submit"
                     className="flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
