@@ -37,13 +37,20 @@ function LoginForm() {
 
       const response = await fetch('http://127.0.0.1:5000/login', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({username, password})
-      }).then((t) => t.json())
+      }).then((t) => console.log("hee"))
+    }
 
-      console.log(response);
+    async function handleTest(event: React.SyntheticEvent) {
+      event.preventDefault();
+      const response = await fetch('http://127.0.0.1:5000/userdata', {
+        method: 'GET',
+        credentials: 'include'
+      }).then((t) => console.log("YO"))
     }
 
 
@@ -108,6 +115,17 @@ function LoginForm() {
                     className="flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Register
+                  </button>
+                </div>
+
+
+                <div>
+                  <button
+                  onClick={ (e) => { handleTest(e)}}
+                    type="submit"
+                    className="flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    testGetUserData
                   </button>
                 </div>
               </form>
